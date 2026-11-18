@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111111">
+  <title>Welcome back | Northstar</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #172033;
+      background: #f6f7fb;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      background:
+        radial-gradient(ellipse at 12% 10%, rgba(218, 227, 255, .62), transparent 34%),
+        radial-gradient(ellipse at 90% 92%, rgba(241, 220, 255, .45), transparent 32%),
+        #f6f7fb;
+    }
+
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+
+    .page {
+      width: min(100%, 1060px);
+      min-height: 640px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border: 1px solid rgba(222, 226, 237, .9);
+      border-radius: 28px;
+      background: #fff;
+      box-shadow: 0 28px 80px rgba(39, 48, 77, .12);
+    }
+
+    .welcome-panel {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: 42px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 78% 18%, rgba(177, 152, 255, .35), transparent 27%),
+        linear-gradient(145deg, #242b55 0%, #35346f 53%, #51429a 100%);
+    }
+
+    .welcome-panel::before,
+    .welcome-panel::after {
+      position: absolute;
+      content: "";
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .welcome-panel::before {
+      width: 440px;
+      height: 440px;
+      right: -210px;
+      bottom: 76px;
+    }
+
+    .welcome-panel::after {
+      width: 310px;
+      height: 310px;
+      right: -145px;
+      bottom: 141px;
+    }
+
+    .brand {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 11px;
+      color: inherit;
+      font-size: 17px;
+      font-weight: 720;
+      letter-spacing: -.3px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .22);
+      border-radius: 11px;
+      background: rgba(255, 255, 255, .13);
+    }
+
+    .brand-mark svg { width: 19px; height: 19px; }
+
+    .welcome-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 390px;
+      margin: 74px 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #c9c8ff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    .welcome-copy h1 {
+      max-width: 360px;
+      margin: 0;
+      font-size: clamp(36px, 4vw, 52px);
+      font-weight: 650;
+      letter-spacing: -2.5px;
+      line-height: 1.08;
+    }
+
+    .welcome-copy > p:last-child {
+      max-width: 340px;
+      margin: 19px 0 0;
+      color: rgba(241, 241, 255, .76);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .testimonial {
+      position: relative;
+      z-index: 1;
+      max-width: 390px;
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, .08);
+      backdrop-filter: blur(12px);
+    }
+
+    .stars {
+      margin-bottom: 10px;
+      color: #ffd77a;
+      font-size: 13px;
+      letter-spacing: 2px;
+    }
+
+    .testimonial blockquote {
+      margin: 0;
+      color: rgba(255, 255, 255, .92);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .testimonial figcaption {
+      margin-top: 13px;
+      color: rgba(255, 255, 255, .68);
+      font-size: 11px;
+    }
+
+    .form-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 56px clamp(32px, 6vw, 76px);
+    }
+
+    .form-content { width: 100%; max-width: 360px; }
+
+    .mobile-brand { display: none; }
+
+    .form-content h2 {
+      margin: 0;
+      color: #192139;
+      font-size: 32px;
+      font-weight: 680;
+      letter-spacing: -1.2px;
+    }
+
+    .subtitle {
+      margin: 9px 0 30px;
+      color: #788096;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .field { margin-top: 18px; }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      color: #30384d;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .input-wrap { position: relative; }
+
+    .field input {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px;
+      border: 1px solid #e1e4ec;
+      border-radius: 10px;
+      outline: none;
+      color: #202940;
+      background: #fff;
+      font-size: 13px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .field input::placeholder { color: #a4aaba; }
+
+    .field input:focus {
+      border-color: #7263cf;
+      box-shadow: 0 0 0 3px rgba(114, 99, 207, .13);
+    }
+
+    .password-input { padding-right: 68px !important; }
+
+    .toggle-password {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      padding: 6px;
+      transform: translateY(-50%);
+      border: 0;
+      border-radius: 6px;
+      color: #777f95;
+      background: transparent;
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .toggle-password:hover { color: #51439d; }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 16px 0 23px;
+      font-size: 11px;
+    }
+
+    .remember {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #687087;
+      cursor: pointer;
+    }
+
+    .remember input {
+      width: 14px;
+      height: 14px;
+      margin: 0;
+      accent-color: #6454bd;
+    }
+
+    a { color: #5c4db0; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .form-options a { font-weight: 650; }
+
+    .submit-button,
+    .google-button {
+      display: flex;
+      width: 100%;
+      height: 48px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 650;
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+
+    .submit-button {
+      border: 0;
+      color: #fff;
+      background: linear-gradient(105deg, #5c4db0, #7565d1);
+      box-shadow: 0 7px 16px rgba(92, 77, 176, .2);
+    }
+
+    .submit-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(92, 77, 176, .27);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin: 22px 0;
+      color: #9aa0af;
+      font-size: 10px;
+    }
+
+    .divider::before,
+    .divider::after {
+      height: 1px;
+      flex: 1;
+      content: "";
+      background: #eceef3;
+    }
+
+    .google-button {
+      border: 1px solid #e1e4ec;
+      color: #343b4f;
+      background: #fff;
+    }
+
+    .google-button:hover { background: #fafaff; }
+    .google-button svg { width: 16px; height: 16px; }
+
+    .signup {
+      margin: 25px 0 0;
+      color: #81889a;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .signup .text-button { font-weight: 680; }
+
+    .form-message {
+      min-height: 18px;
+      margin: 12px 0 0;
+      color: #51439d;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .form-message[data-kind="error"] { color: #b42318; }
+    .form-message[data-kind="success"] { color: #24734b; }
+    [hidden] { display: none !important; }
+
+    .text-button {
+      padding: 0;
+      border: 0;
+      color: #5c4db0;
+      background: transparent;
+      font: inherit;
+      font-weight: 650;
+      text-decoration: none;
+    }
+
+    .text-button:hover { text-decoration: underline; }
+    .form-options .text-button { font-size: inherit; }
+
+    .signed-in-panel {
+      padding: 22px;
+      border: 1px solid #e8e5f5;
+      border-radius: 14px;
+      background: #faf9ff;
+    }
+
+    .signed-in-panel p {
+      margin: 0 0 16px;
+      color: #596078;
+      font-size: 13px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+    }
+
+    .signed-in-panel strong { color: #192139; }
+
+    @media (max-width: 760px) {
+      body { padding: 20px; }
+      .page {
+        width: min(100%, 480px);
+        min-height: 0;
+        grid-template-columns: 1fr;
+        border-radius: 22px;
+      }
+      .welcome-panel { display: none; }
+      .form-panel { padding: 38px clamp(24px, 8vw, 42px); }
+      .mobile-brand {
+        display: inline-flex;
+        margin-bottom: 34px;
+        color: #272d50;
+      }
+      .mobile-brand .brand-mark {
+        border-color: #e6e3f5;
+        color: #5c4db0;
+        background: #f4f1ff;
+      }
+    }
+
+    @media (max-width: 380px) {
+      body { padding: 12px; }
+      .form-panel { padding: 30px 22px; }
+      .form-options { font-size: 10px; }
+    }
+  </style>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <aside class="welcome-panel" aria-label="About Northstar">
+      <a class="brand" href="#" aria-label="Northstar home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2.8 14.7 9.3 21.2 12l-6.5 2.7L12 21.2l-2.7-6.5L2.8 12l6.5-2.7L12 2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+            <circle cx="12" cy="12" r="2" fill="currentColor"/>
+          </svg>
+        </span>
+        Northstar
+      </a>
+
+      <div class="welcome-copy">
+        <p class="eyebrow">A clearer way forward</p>
+        <h1>Your next great idea starts here.</h1>
+        <p>Pick up right where you left off. Your workspace, your team, and your best work are just a moment away.</p>
+      </div>
+
+      <figure class="testimonial">
+        <div class="stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <blockquote>“Northstar gives our team the clarity to focus on what really matters. It just feels effortless.”</blockquote>
+        <figcaption>Jordan Lee · Product lead</figcaption>
+      </figure>
+    </aside>
+
+    <section class="form-panel" aria-labelledby="login-title">
+      <div class="form-content">
+        <a class="brand mobile-brand" href="#" aria-label="Northstar home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 2.8 14.7 9.3 21.2 12l-6.5 2.7L12 21.2l-2.7-6.5L2.8 12l6.5-2.7L12 2.8Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+              <circle cx="12" cy="12" r="2" fill="currentColor"/>
+            </svg>
+          </span>
+          Northstar
+        </a>
+        <h2 id="login-title">Welcome back</h2>
+        <p class="subtitle">Enter your details to sign in to your account.</p>
+
+        <form id="login-form">
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <input class="password-input" id="password" name="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+              <button class="toggle-password" id="toggle-password" type="button" aria-controls="password" aria-pressed="false">Show</button>
+            </div>
+          </div>
+
+          <div class="form-options">
+            <label class="remember"><input type="checkbox" name="remember"> <span>Remember me</span></label>
+            <button class="text-button" id="reset-password" type="button">Forgot password?</button>
+          </div>
+
+          <button class="submit-button" id="submit-button" type="submit">Sign in</button>
+          <div class="divider">OR CONTINUE WITH</div>
+          <button class="google-button" id="google-button" type="button">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z" transform="translate(0 5)"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.74 7.18l7.68 5.96c4.48-4.14 7.1-10.23 7.1-17.61Z"/>
+              <path fill="#FBBC05" d="M10.53 28.59a14.4 14.4 0 0 1 0-9.18l-7.98-6.19a23.9 23.9 0 0 0 0 21.56l7.98-6.19Z" transform="translate(0 5)"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.9-5.84l-7.68-5.96c-2.13 1.43-4.85 2.3-8.22 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z" transform="translate(0 -5)"/>
+            </svg>
+            Google
+          </button>
+          <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="signup"><span id="mode-prompt">Don't have an account?</span> <button class="text-button" id="mode-toggle" type="button">Create account</button></p>
+        <section class="signed-in-panel" id="signed-in-panel" aria-live="polite" hidden>
+          <p>You’re signed in as <strong id="signed-in-email"></strong>.</p>
+          <button class="google-button" id="sign-out-button" type="button">Sign out</button>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
